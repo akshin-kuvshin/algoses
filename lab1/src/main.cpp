@@ -57,6 +57,32 @@ int main()
     }
     std::cout << std::endl;
 
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < n; ++j)
+            delete a[i][j];
+        delete[] a[i];
+    }
+    delete[] a;
+
+
+    int m;
+    std::cout << "m = ";
+    std::cin >> m;
+
+    ContestParticipant** participants = new ContestParticipant*[m];
+    for (int i = 0; i < m; ++i)
+        participants[i] = new ContestParticipant;
+
+    std::cout << "Participants before sorting:" << std::endl;
+    print_cp_table(participants, m);
+    Sort<ContestParticipant>::merge_sort(participants, m);
+    std::cout << "Participants after sorting:" << std::endl;
+    print_cp_table(participants, m);
+
+    for (int i = 0; i < m; ++i)
+        delete participants[i];
+    delete[] participants;
+
     return 0;
 }
 

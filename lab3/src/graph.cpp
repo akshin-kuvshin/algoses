@@ -36,6 +36,7 @@ std::vector<std::vector<lli>> calculate_d_sqr(const std::vector<point>& points, 
 
 std::vector<rib> build_MST(const std::vector<std::vector<lli>>& d_sqr, int n) {
     std::vector<rib> MST;
+    int MST_size = 0;
 
     std::vector<bool> used(n);
     std::priority_queue<wrib> q;
@@ -44,7 +45,7 @@ std::vector<rib> build_MST(const std::vector<std::vector<lli>>& d_sqr, int n) {
     for (int i = 1; i < n; ++i)
         q.emplace(0, i, d_sqr[0][i]);
 
-    while (not q.empty()) {
+    while (MST_size < n - 1 and not q.empty()) {
         auto wr = q.top();
         q.pop();
 
@@ -53,6 +54,8 @@ std::vector<rib> build_MST(const std::vector<std::vector<lli>>& d_sqr, int n) {
         used[wr.v] = true;
 
         MST.emplace_back(wr.u, wr.v);
+        ++MST_size;
+
         for (int i = 0; i < n; ++i) {
             if (used[i])
                 continue;
